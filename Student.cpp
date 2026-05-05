@@ -1,16 +1,30 @@
 #include "Student.h"
 #include <cstdlib>
 #include <cmath>
-
-Student::Student(std::string name, StudentType type)
+Student::Student(const std::string& name, StudentType type) 
 {
     this->name = name;
     this->type = type;
 }
-
+const std::string& Student::getName() const
+{
+    return name;
+}
 void Student::solve(double a, double b, double c, double& x1, double& x2) const
 {
     const double e = 1e-9;
+    bool correct = false;
+    if (type == StudentType::good)
+        correct = true;
+    else if (type == StudentType::medium)
+        correct = (std::rand() % 2 == 0);
+    else
+        correct = false;
+    if (!correct)
+    {
+        x1 = x2 = 0;
+        return;
+    }
     if (std::abs(a) < e)
     {
         x1 = x2 = 0;
@@ -22,27 +36,6 @@ void Student::solve(double a, double b, double c, double& x1, double& x2) const
         x1 = x2 = 0;
         return;
     }
-    double real_x1 = (-b + std::sqrt(D)) / (2 * a);
-    double real_x2 = (-b - std::sqrt(D)) / (2 * a);
-    if (type == StudentType::good)
-    {
-        x1 = real_x1;
-        x2 = real_x2;
-    }
-    else if (type == StudentType::medium)
-    {
-        if (std::rand() % 2 == 0)
-        {
-            x1 = real_x1;
-            x2 = real_x2;
-        }
-        else
-        {
-            x1 = x2 = 0;
-        }
-    }
-    else 
-    {
-        x1 = x2 = 0;
-    }
+    x1 = (-b + std::sqrt(D)) / (2 * a);
+    x2 = (-b - std::sqrt(D)) / (2 * a);
 }
