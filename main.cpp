@@ -26,7 +26,7 @@ int main()
     std::map<std::string, int> correct;
     for (const auto& s : students)
     {
-        correct[s.name] = 0;
+        correct[s.getName()] = 0;
     }
     std::vector<Mail> mails;
     std::ifstream file("input.txt");
@@ -42,7 +42,7 @@ int main()
         {
             double x1, x2;
             student.solve(a, b, c, x1, x2);
-            mails.emplace_back(student.name, a, b, c, x1, x2);
+            mails.emplace_back(student.getName(), a, b, c, x1, x2);
         }
     }
     for (const auto& mail : mails)
@@ -59,7 +59,7 @@ int main()
     std::cout << "Имя\tРешено\n";
     for (const auto& s : students)
     {
-        std::cout << s.name << "\t" << correct[s.name] << "\n";
+        std::cout << s.name << "\t" << correct[s.getName()] << "\n";
     }
     return 0;
 }
